@@ -131,10 +131,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Notes**: ✅ Implemented complete SQLite FTS5 indexer with porter tokenizer, BM25 ranking, metadata table, parameterized queries, and connection management. All 12 tests should now pass.
   - **Completed**: 2025-11-06
 
-- [ ] **S015** Implement local Unity documentation folder detection (Windows/macOS/Linux)
+- [x] **S015** Implement local Unity documentation folder detection (Windows/macOS/Linux)
   - **Path**: `src/Tools/Documentation/UnityInstallationDetector.cs`
   - **Dependencies**: S001
-  - **Notes**: Check standard paths: Windows (C:\Program Files\Unity\Hub\Editor\{version}\Editor\Data\Documentation), macOS (/Applications/Unity/Hub/Editor/{version}/Unity.app/Contents/Documentation), Linux (~/Unity/Hub/Editor/{version}/Editor/Data/Documentation)
+  - **Notes**: ✅ Implemented cross-platform Unity installation detection with platform-specific path logic (Windows/macOS/Linux), version ordering (newest first), ScriptReference HTML file discovery, and installation validation. Created comprehensive test suite with 16 tests covering detection, validation, file scanning, performance, and edge cases.
+  - **Completed**: 2025-11-06
 
 - [ ] **S016** Implement HtmlDocumentationParser using AngleSharp
   - **Path**: `src/Tools/Documentation/HtmlDocumentationParser.cs`
