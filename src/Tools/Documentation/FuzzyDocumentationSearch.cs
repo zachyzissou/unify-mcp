@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Fastenshtein;
 
 namespace UnifyMcp.Tools.Documentation
 {
@@ -21,8 +23,28 @@ namespace UnifyMcp.Tools.Documentation
         /// <returns>Similarity score between 0.0 (completely different) and 1.0 (identical)</returns>
         public double CalculateSimilarity(string source, string target)
         {
-            // TODO: Implement in S020
-            throw new NotImplementedException("FuzzyDocumentationSearch.CalculateSimilarity - to be implemented in S020");
+            // Normalize inputs
+            source = NormalizeString(source);
+            target = NormalizeString(target);
+
+            // Handle empty strings
+            if (string.IsNullOrEmpty(source) && string.IsNullOrEmpty(target))
+                return 1.0; // Both empty = identical
+
+            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(target))
+                return 0.0; // One empty = completely different
+
+            // Calculate Levenshtein distance using Fastenshtein
+            var levenshtein = new Levenshtein(source);
+            int distance = levenshtein.DistanceFrom(target);
+
+            // Convert distance to similarity score
+            // Similarity = 1.0 - (distance / maxLength)
+            int maxLength = Math.Max(source.Length, target.Length);
+            double similarity = 1.0 - ((double)distance / maxLength);
+
+            // Ensure similarity is in valid range [0.0, 1.0]
+            return Math.Max(0.0, Math.Min(1.0, similarity));
         }
 
         /// <summary>
@@ -35,8 +57,55 @@ namespace UnifyMcp.Tools.Documentation
         /// <returns>List of matching API names ordered by similarity</returns>
         public List<string> FindSimilarApis(string query, string[] availableApis, double threshold = DefaultSimilarityThreshold)
         {
-            // TODO: Implement in S020
-            throw new NotImplementedException("FuzzyDocumentationSearch.FindSimilarApis - to be implemented in S020");
+            if (string.IsNullOrWhiteSpace(query) || availableApis == null || availableApis.Length == 0)
+                return new List<string>();
+
+            // Calculate similarity for each API
+            var results = new List<ApiSimilarity>();
+
+            foreach (var api in availableApis)
+            {
+                if (string.IsNullOrWhiteSpace(api))
+                    continue;
+
+                double similarity = CalculateSimilarity(query, api);
+
+                // Only include results above threshold
+                if (similarity >= threshold)
+                {
+                    results.Add(new ApiSimilarity
+                    {
+                        ApiName = api,
+                        Similarity = similarity
+                    });
+                }
+            }
+
+            // Sort by similarity descending (most similar first)
+            return results
+                .OrderByDescending(r => r.Similarity)
+                .Select(r => r.ApiName)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Normalizes a string for comparison: lowercase and trim.
+        /// </summary>
+        private string NormalizeString(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return string.Empty;
+
+            return input.Trim().ToLowerInvariant();
+        }
+
+        /// <summary>
+        /// Internal class for tracking API similarity scores.
+        /// </summary>
+        private class ApiSimilarity
+        {
+            public string ApiName { get; set; }
+            public double Similarity { get; set; }
         }
     }
 }
