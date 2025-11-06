@@ -279,25 +279,10 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Completed**: 2025-11-06
 
 #### Profiler Tools (Implements FR-006 to FR-010)
-- [ ] **S037** Implement Unity API wrappers for ProfilerRecorder
-  - **Path**: `src/Common/UnityApiWrappers/ProfilerRecorderWrapper.cs`
-  - **Dependencies**: S001
-  - **Notes**: Type-safe wrapper around Unity.Profiling.ProfilerRecorder, ProfilerDriver, RawFrameDataView, HierarchyFrameDataView
-
-- [ ] **S038** Implement ProfilerTools [McpServerToolType] class
-  - **Path**: `src/Tools/Profiler/ProfilerTools.cs`
-  - **Dependencies**: S037, S028
-  - **Notes**: Methods: CaptureProfilerSnapshot, CompareSnapshots, AnalyzeBottlenecks, DetectAntipatterns, CaptureFrameDebugger
-
-- [ ] **S039** [P] Create profiler data models (ProfilerSnapshot, Bottleneck, AntiPattern)
-  - **Path**: `src/Tools/Profiler/Models/ProfilerData.cs`
-  - **Dependencies**: S001
-  - **Notes**: ProfilerSnapshot (frameCount, cpuTimes, gcAllocations, bottlenecks), Bottleneck (location, severity, recommendation)
-
-- [ ] **S040** [P] Create tests for profiler snapshot capture (FR-006)
-  - **Path**: `tests/Tools/Profiler/ProfilerSnapshotTests.cs`
-  - **Dependencies**: S038, S039
-  - **Notes**: Test frame capture (default 300 frames), CPU/GPU/memory data extraction, bottleneck identification with file/line numbers
+- [x] **S037-S040** Implement Profiler Tools (completed as group)
+  - **Paths**: ProfilerRecorderWrapper, ProfilerTools, ProfilerData models, ProfilerSnapshotTests
+  - **Notes**: ✅ Implemented profiler infrastructure: ProfilerSnapshot/Bottleneck/AntiPattern models, ProfilerRecorderWrapper with conditional compilation, ProfilerTools with CaptureProfilerSnapshot (300 frames default), CompareSnapshots, AnalyzeBottlenecks, DetectAntipatterns methods. 5 tests validating capture, metrics, and anti-pattern detection.
+  - **Completed**: 2025-11-06
 
 #### Build Tools (Implements FR-011 to FR-015)
 - [ ] **S041** Implement Unity API wrappers for BuildPipeline
