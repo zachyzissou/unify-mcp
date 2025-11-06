@@ -149,10 +149,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Notes**: ✅ Created complete data model with all required fields plus deprecation tracking (IsDeprecated, ReplacementApi). Includes helper methods: GetFullSignature(), GetParameterList(), GetSearchableText().
   - **Completed**: 2025-11-06
 
-- [ ] **S018** Implement background indexing worker with cancellation support
+- [x] **S018** Implement background indexing worker with cancellation support
   - **Path**: `src/Tools/Documentation/DocumentationIndexingWorker.cs`
   - **Dependencies**: S005, S014, S015, S016
-  - **Notes**: Use EditorCoroutine for async indexing, CancellationTokenSource for cancellation, process documentation files in batches
+  - **Notes**: ✅ Implemented background indexing using EditorCoroutine with batch processing (configurable batch size and delays), CancellationTokenSource for graceful cancellation, progress tracking (total/processed/success/failed), event system (OnFileProcessed/OnProgress/OnCompleted/OnError), ETA calculation, and IndexingSummary for status reporting. Created 15 comprehensive tests validating initialization, configuration, events, and error handling.
+  - **Completed**: 2025-11-06
 
 - [ ] **S019** Implement progress reporting UI for indexing
   - **Path**: `src/Unity/Editor/DocumentationIndexingProgressWindow.cs`
