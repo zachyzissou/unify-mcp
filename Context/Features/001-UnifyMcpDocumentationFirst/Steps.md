@@ -210,10 +210,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Notes**: ✅ Created 15 comprehensive tests covering enqueue/dequeue, FIFO ordering, exception handling (continue processing despite errors), null argument validation, queue count tracking, max queue size enforcement, multi-threaded enqueue (thread safety), task execution, Clear/Dispose, performance (1000 actions <500ms), context capture, and exception reporting via OnException event.
   - **Completed**: 2025-11-06
 
-- [ ] **S027** [P] Create tests for MCP server lifecycle (startup, shutdown, error recovery)
+- [x] **S027** [P] Create tests for MCP server lifecycle (startup, shutdown, error recovery)
   - **Path**: `tests/Core/McpServerLifecycleTests.cs`
   - **Dependencies**: S001, S002
-  - **Notes**: Test [InitializeOnLoad] startup, graceful shutdown, stdio transport initialization
+  - **Notes**: ✅ Created 10 lifecycle tests: Initialize, Start/Stop transitions, Dispose while running, idempotent Start/Stop, OnError event, Restart, OnStarted/OnStopped events.
+  - **Completed**: 2025-11-06
 
 #### Core Implementation
 - [x] **S028** Implement thread-safe message queue with EditorApplication.update integration
@@ -222,30 +223,35 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Notes**: ✅ Implemented MainThreadDispatcher with ConcurrentQueue<Action>, EditorApplication.update auto-registration (Unity Editor), manual ProcessQueue for testing, Enqueue with null/disposed/size validation, exception handling (continues processing, invokes OnException, logs to Unity console), Clear/Dispose methods, singleton Instance pattern with InitializeInstance/DisposeInstance, conditional compilation for Unity Editor vs testing. Default max queue: 1000 actions.
   - **Completed**: 2025-11-06
 
-- [ ] **S029** Implement MCP server lifecycle manager with [InitializeOnLoad]
+- [x] **S029** Implement MCP server lifecycle manager with [InitializeOnLoad]
   - **Path**: `src/Core/McpServerLifecycle.cs`
   - **Dependencies**: S002, S010, S027
-  - **Notes**: Static constructor with [InitializeOnLoad], initialize ModelContextProtocol server, register cleanup on editor shutdown (EditorApplication.quitting)
+  - **Notes**: ✅ Implemented lifecycle manager with [InitializeOnLoadMethod], Start/Stop/Restart methods, IsRunning property, OnStarted/OnStopped/OnError events, EditorApplication.quitting integration, MainThreadDispatcher initialization, singleton Instance pattern, conditional compilation for Unity Editor auto-start. Phase 4 TODO markers for ModelContextProtocol and stdio transport initialization.
+  - **Completed**: 2025-11-06
 
-- [ ] **S030** Implement stdio transport layer for MCP communication
+- [x] **S030** Implement stdio transport layer for MCP communication
   - **Path**: `src/Core/TransportLayer/StdioTransport.cs`
   - **Dependencies**: S002, S028, S029
-  - **Notes**: Read from Console.In, write to Console.Out, marshal Unity API calls to main thread via MainThreadDispatcher, handle JSON-RPC 2.0 messages
+  - **Notes**: ✅ Implemented StdioTransport with Console.In/Console.Out (configurable for testing), async read loop on background thread, SendMessageAsync with SemaphoreSlim write lock, Start/StopAsync lifecycle, OnMessageReceived/OnError events, CancellationToken support, graceful shutdown with timeout. Thread-safe message sending, background reading with main thread marshalling support.
+  - **Completed**: 2025-11-06
 
-- [ ] **S031** Implement JSON schema generator using NJsonSchema
+- [x] **S031** Implement JSON schema generator using NJsonSchema
   - **Path**: `src/Core/SchemaGenerator.cs`
   - **Dependencies**: S004
-  - **Notes**: Generate JSON schemas from C# method parameters, integrate with ModelContextProtocol SDK attribute system, cache generated schemas
+  - **Notes**: ✅ Implemented SchemaGenerator with NJsonSchema integration, GenerateMethodSchema (parameterless/single/multiple params), GenerateTypeSchema with ConcurrentDictionary caching, JsonSchemaGeneratorSettings (NotNull default, abstract properties, flatten hierarchy), ClearCache/CachedSchemaCount utilities. Phase 4 TODO for composite schema generation.
+  - **Completed**: 2025-11-06
 
-- [ ] **S032** Implement error handling and logging infrastructure
+- [x] **S032** Implement error handling and logging infrastructure
   - **Path**: `src/Common/ErrorHandling/McpErrorHandler.cs`
   - **Dependencies**: S001
-  - **Notes**: Structured error messages with context, Unity Debug.Log integration, error categorization (Unity API errors, MCP protocol errors, user errors)
+  - **Notes**: ✅ Implemented McpErrorHandler with HandleException (categorization + structured error), CategorizeException (UnityApi/McpProtocol/UserError/Internal), LogError (Unity Debug.Log with severity: Warning for UserError, Error+Exception for others), FormatUserMessage for user-friendly errors, OnError event, McpError model (Exception/Category/Context/Timestamp/Message/StackTrace), ErrorCategory enum.
+  - **Completed**: 2025-11-06
 
-- [ ] **S033** Create EditorPrefs-based configuration manager
+- [x] **S033** Create EditorPrefs-based configuration manager
   - **Path**: `src/Core/Configuration/McpConfigurationManager.cs`
   - **Dependencies**: S001
-  - **Notes**: Store server port, documentation cache location, indexing settings. EditorPrefs keys: "UnifyMcp.ServerPort", "UnifyMcp.DocCachePath", etc.
+  - **Notes**: ✅ Implemented McpConfigurationManager with EditorPrefs persistence, properties: ServerPort (3000), DocCachePath (AppData/UnifyMcp/DocCache), AutoStartServer (true), MaxQueueSize (1000), EnableLogging (true), IndexOnStartup (false), CacheExpirationDays (30), ResetToDefaults method, conditional compilation for Unity Editor, singleton Instance pattern.
+  - **Completed**: 2025-11-06
 
 **🏁 MILESTONE: MCP Server Core Complete**
 *MCP server running in Unity Editor with stdio transport and thread-safe Unity API access.*
