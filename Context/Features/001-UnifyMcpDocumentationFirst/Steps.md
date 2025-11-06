@@ -167,25 +167,29 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Notes**: ✅ Implemented fuzzy search with Fastenshtein Levenshtein distance calculation, string normalization (lowercase + trim), similarity scoring (1.0 - distance/maxLength), threshold filtering (default 0.7), descending sort by similarity, and empty string handling. All 15 tests from FuzzySearchTests.cs should now pass.
   - **Completed**: 2025-11-06
 
-- [ ] **S021** Implement web documentation fallback using AngleSharp + caching
+- [x] **S021** Implement web documentation fallback using AngleSharp + caching
   - **Path**: `src/Tools/Documentation/WebDocumentationFetcher.cs`
   - **Dependencies**: S004, S016
-  - **Notes**: Fetch from docs.unity3d.com with exponential backoff for 429/503, cache HTML locally, implement rate limiting (1-2 second delays)
+  - **Notes**: ✅ Implemented HTTP client with rate limiting (1-2s random delay), exponential backoff retry logic for 429/503 errors (max 3 retries), local HTML caching using SHA256 URL hashing, GetCachedHtml/CacheHtml methods, ClearCache and GetCachedFileCount utilities. Configurable: MinimumDelayMilliseconds, MaximumDelayMilliseconds, MaxRetries, InitialRetryDelayMilliseconds.
+  - **Completed**: 2025-11-06
 
-- [ ] **S022** Create 30-day cache management with expiration tracking
+- [x] **S022** Create 30-day cache management with expiration tracking
   - **Path**: `src/Tools/Documentation/DocumentationCacheManager.cs`
   - **Dependencies**: S014, S021
-  - **Notes**: Store cache metadata (URL, fetch timestamp, expiration), implement cache cleanup on startup, provide manual cache clear option
+  - **Notes**: ✅ Implemented cache metadata tracking with JSON persistence (cache_metadata.json), RecordCachedUrl/IsCached/GetCacheFilePath methods, CleanupExpiredCache with expired/orphaned detection, ClearAllCache for manual cleanup, GetStatistics for cache metrics (entries/size). Default expiration: 30 days. CacheMetadata model: URL, CacheFilePath, FetchTimestamp, ExpirationTimestamp.
+  - **Completed**: 2025-11-06
 
-- [ ] **S023** Implement Unity version detection and version-appropriate documentation
+- [x] **S023** Implement Unity version detection and version-appropriate documentation
   - **Path**: `src/Tools/Documentation/UnityVersionManager.cs`
   - **Dependencies**: S001
-  - **Notes**: Use UnityEditor.ApplicationInfo.unityVersion, map to documentation version (2021.3, 2022.3, 6.0), flag deprecated APIs with migration suggestions
+  - **Notes**: ✅ Implemented GetCurrentUnityVersion (UnityEditor.ApplicationInfo.unityVersion), MapToDocumentationVersion (2021.3.25f1 → 2021.3, handles Unity 6 as 6000.0.x → 6.0), CompareVersions with major/minor/patch comparison, IsDeprecatedInVersion for version-aware deprecation, GetMigrationSuggestion for replacement API guidance, GetDocumentationUrl for version-specific URL generation.
+  - **Completed**: 2025-11-06
 
-- [ ] **S024** Add deprecation warning detection in parsed documentation
+- [x] **S024** Add deprecation warning detection in parsed documentation
   - **Path**: `src/Tools/Documentation/DeprecationDetector.cs`
   - **Dependencies**: S016, S023
-  - **Notes**: Parse HTML for "Deprecated" or "Obsolete" markers, extract replacement API suggestions, include in DocumentationEntry
+  - **Notes**: ✅ Implemented DetectDeprecation with HTML parsing for .deprecated-message/.obsolete-message elements, keyword detection (deprecated/obsolete/no longer supported), [Obsolete] attribute parsing, regex extraction for replacement APIs (multiple patterns: "Use X instead", "Please use X", "Replaced by X"), version extraction ("since Unity X.Y"), EnrichWithDeprecationInfo for DocumentationEntry enrichment, GetDeprecationWarning for user-facing messages.
+  - **Completed**: 2025-11-06
 
 - [ ] **S025** Write integration tests for complete indexing workflow
   - **Path**: `tests/Documentation/IntegrationTests/FullIndexingWorkflowTests.cs`
