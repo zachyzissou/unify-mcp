@@ -137,10 +137,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Notes**: ✅ Implemented cross-platform Unity installation detection with platform-specific path logic (Windows/macOS/Linux), version ordering (newest first), ScriptReference HTML file discovery, and installation validation. Created comprehensive test suite with 16 tests covering detection, validation, file scanning, performance, and edge cases.
   - **Completed**: 2025-11-06
 
-- [ ] **S016** Implement HtmlDocumentationParser using AngleSharp
+- [x] **S016** Implement HtmlDocumentationParser using AngleSharp
   - **Path**: `src/Tools/Documentation/HtmlDocumentationParser.cs`
   - **Dependencies**: S004, S012
-  - **Notes**: Parse Unity ScriptReference HTML, extract class.method signatures, parameters with types, return types, descriptions, code examples
+  - **Notes**: ✅ Implemented comprehensive HTML parser using AngleSharp with intelligent signature parsing for methods and properties, title/h1 extraction for class.method names, description aggregation, code example collection, parameter detail extraction, deprecation detection with replacement API regex, and static method detection. Handles complex scenarios: generics, default parameters, properties with get/set, nested generic parameters in parsing.
+  - **Completed**: 2025-11-06
 
 - [x] **S017** Create DocumentationEntry data model with version tracking
   - **Path**: `src/Tools/Documentation/Models/DocumentationEntry.cs`
