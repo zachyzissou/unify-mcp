@@ -191,10 +191,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Notes**: ✅ Implemented DetectDeprecation with HTML parsing for .deprecated-message/.obsolete-message elements, keyword detection (deprecated/obsolete/no longer supported), [Obsolete] attribute parsing, regex extraction for replacement APIs (multiple patterns: "Use X instead", "Please use X", "Replaced by X"), version extraction ("since Unity X.Y"), EnrichWithDeprecationInfo for DocumentationEntry enrichment, GetDeprecationWarning for user-facing messages.
   - **Completed**: 2025-11-06
 
-- [ ] **S025** Write integration tests for complete indexing workflow
+- [x] **S025** Write integration tests for complete indexing workflow
   - **Path**: `tests/Documentation/IntegrationTests/FullIndexingWorkflowTests.cs`
   - **Dependencies**: S014-S024
-  - **Notes**: Test end-to-end: detect Unity install → parse documentation → index to SQLite → query with fuzzy search → verify results
+  - **Notes**: ✅ Created 8 comprehensive integration tests covering end-to-end workflow (detect → parse → index → query → fuzzy search), version manager mapping, deprecation detection, cache management, indexing worker progress tracking, BM25 ranking verification, fuzzy search with common typos, and deprecated API warnings. Mock Unity documentation structure with Transform.Translate, Transform.Rotate, GameObject.Find HTML files.
+  - **Completed**: 2025-11-06
 
 **🏁 MILESTONE: Documentation System Complete**
 *Documentation indexing, search, and caching fully functional. Implements FR-001 through FR-005.*
