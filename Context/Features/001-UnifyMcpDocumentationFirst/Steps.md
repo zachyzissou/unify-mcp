@@ -204,10 +204,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
 *ModelContextProtocol SDK integration, stdio transport, thread-safe message queue*
 
 #### Core Infrastructure Tests
-- [ ] **S026** [P] Create tests for thread-safe message queue (ConcurrentQueue pattern)
+- [x] **S026** [P] Create tests for thread-safe message queue (ConcurrentQueue pattern)
   - **Path**: `tests/Core/ThreadingTests.cs`
   - **Dependencies**: S001
-  - **Notes**: Test message enqueue/dequeue, exception handling across thread boundary, queue size limits
+  - **Notes**: ✅ Created 15 comprehensive tests covering enqueue/dequeue, FIFO ordering, exception handling (continue processing despite errors), null argument validation, queue count tracking, max queue size enforcement, multi-threaded enqueue (thread safety), task execution, Clear/Dispose, performance (1000 actions <500ms), context capture, and exception reporting via OnException event.
+  - **Completed**: 2025-11-06
 
 - [ ] **S027** [P] Create tests for MCP server lifecycle (startup, shutdown, error recovery)
   - **Path**: `tests/Core/McpServerLifecycleTests.cs`
@@ -215,10 +216,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Notes**: Test [InitializeOnLoad] startup, graceful shutdown, stdio transport initialization
 
 #### Core Implementation
-- [ ] **S028** Implement thread-safe message queue with EditorApplication.update integration
+- [x] **S028** Implement thread-safe message queue with EditorApplication.update integration
   - **Path**: `src/Common/Threading/MainThreadDispatcher.cs`
   - **Dependencies**: S026
-  - **Notes**: ConcurrentQueue<Action> for cross-thread communication, EditorApplication.update polling, exception handling, queue size limits (prevent memory exhaustion)
+  - **Notes**: ✅ Implemented MainThreadDispatcher with ConcurrentQueue<Action>, EditorApplication.update auto-registration (Unity Editor), manual ProcessQueue for testing, Enqueue with null/disposed/size validation, exception handling (continues processing, invokes OnException, logs to Unity console), Clear/Dispose methods, singleton Instance pattern with InitializeInstance/DisposeInstance, conditional compilation for Unity Editor vs testing. Default max queue: 1000 actions.
+  - **Completed**: 2025-11-06
 
 - [ ] **S029** Implement MCP server lifecycle manager with [InitializeOnLoad]
   - **Path**: `src/Core/McpServerLifecycle.cs`
