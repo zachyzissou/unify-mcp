@@ -1,0 +1,22 @@
+{
+  "name": "UnifyMcp.Editor",
+  "rootNamespace": "UnifyMcp",
+  "references": [],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "ModelContextProtocol.dll",
+    "System.Data.SQLite.dll",
+    "NJsonSchema.dll",
+    "Fastenshtein.dll",
+    "AngleSharp.dll"
+  ],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

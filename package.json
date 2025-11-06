@@ -1,0 +1,28 @@
+{
+  "name": "com.anthropic.unify-mcp",
+  "version": "0.1.0",
+  "displayName": "Unify MCP - Unity Model Context Protocol Server",
+  "description": "Advanced Unity Editor MCP server providing AI-accessible tools for documentation queries, profiler analysis, build automation, asset management, scene validation, and package management. Features documentation-first approach with SQLite FTS5 indexing, fuzzy search, and context window optimization.",
+  "unity": "2021.3",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "claude",
+    "documentation",
+    "profiler",
+    "build-automation",
+    "asset-management",
+    "editor-tools"
+  ],
+  "author": {
+    "name": "Anthropic",
+    "email": "noreply@anthropic.com",
+    "url": "https://github.com/zachyzissou/unify-mcp"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "com.unity.editorcoroutines": "1.0.0"
+  },
+  "samples": []
+}
