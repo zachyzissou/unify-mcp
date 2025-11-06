@@ -125,10 +125,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Completed**: 2025-11-06
 
 #### Model & Service Implementation
-- [ ] **S014** Implement UnityDocumentationIndexer class with SQLite FTS5
+- [x] **S014** Implement UnityDocumentationIndexer class with SQLite FTS5
   - **Path**: `src/Tools/Documentation/UnityDocumentationIndexer.cs`
   - **Dependencies**: S003, S011
-  - **Notes**: CREATE VIRTUAL TABLE using FTS5, porter tokenizer for stemming, BM25 ranking
+  - **Notes**: ✅ Implemented complete SQLite FTS5 indexer with porter tokenizer, BM25 ranking, metadata table, parameterized queries, and connection management. All 12 tests should now pass.
+  - **Completed**: 2025-11-06
 
 - [ ] **S015** Implement local Unity documentation folder detection (Windows/macOS/Linux)
   - **Path**: `src/Tools/Documentation/UnityInstallationDetector.cs`
