@@ -106,20 +106,23 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
 *SQLite FTS5 database, HTML parsing, fuzzy search - implements FR-001 through FR-005*
 
 #### Test-First Implementation
-- [ ] **S011** [P] Create tests for UnityDocumentationIndexer with SQLite FTS5 schema
+- [x] **S011** [P] Create tests for UnityDocumentationIndexer with SQLite FTS5 schema
   - **Path**: `tests/Documentation/UnityDocumentationIndexerTests.cs`
   - **Dependencies**: S001, S003
-  - **Notes**: Test database creation, FTS5 table schema, index/query operations
+  - **Notes**: ✅ Created comprehensive test suite with 12 tests covering database creation, FTS5 schema, indexing, querying, BM25 ranking, and performance (<100ms requirement). Created stub implementation for compilation.
+  - **Completed**: 2025-11-06
 
-- [ ] **S012** [P] Create tests for HTML parser with sample Unity documentation
+- [x] **S012** [P] Create tests for HTML parser with sample Unity documentation
   - **Path**: `tests/Documentation/HtmlDocumentationParserTests.cs`
   - **Dependencies**: S001, S004
-  - **Notes**: Test AngleSharp parsing of Unity ScriptReference pages, extract method signatures, parameters, descriptions
+  - **Notes**: ✅ Created 14 comprehensive tests covering method signatures, properties, parameters, code examples, deprecation detection, and edge cases. Created stub implementation.
+  - **Completed**: 2025-11-06
 
-- [ ] **S013** [P] Create tests for fuzzy search with typo tolerance scenarios
+- [x] **S013** [P] Create tests for fuzzy search with typo tolerance scenarios
   - **Path**: `tests/Documentation/FuzzySearchTests.cs`
   - **Dependencies**: S001, S004
-  - **Notes**: Test Fastenshtein Levenshtein distance, similarity scoring, threshold matching (e.g., "Translte" → "Translate")
+  - **Notes**: ✅ Created 15 comprehensive tests covering Levenshtein distance, similarity scoring, typo tolerance, threshold matching, common typos, performance, and edge cases. Created stub implementation.
+  - **Completed**: 2025-11-06
 
 #### Model & Service Implementation
 - [ ] **S014** Implement UnityDocumentationIndexer class with SQLite FTS5
@@ -137,10 +140,11 @@ Implementation task breakdown for Unity MCP server with systematic S001-S999 tas
   - **Dependencies**: S004, S012
   - **Notes**: Parse Unity ScriptReference HTML, extract class.method signatures, parameters with types, return types, descriptions, code examples
 
-- [ ] **S017** Create DocumentationEntry data model with version tracking
+- [x] **S017** Create DocumentationEntry data model with version tracking
   - **Path**: `src/Tools/Documentation/Models/DocumentationEntry.cs`
   - **Dependencies**: S001
-  - **Notes**: Fields: ClassName, MethodName, ReturnType, Parameters[], Description, CodeExamples[], UnityVersion, DocumentationUrl, LastUpdated
+  - **Notes**: ✅ Created complete data model with all required fields plus deprecation tracking (IsDeprecated, ReplacementApi). Includes helper methods: GetFullSignature(), GetParameterList(), GetSearchableText().
+  - **Completed**: 2025-11-06
 
 - [ ] **S018** Implement background indexing worker with cancellation support
   - **Path**: `src/Tools/Documentation/DocumentationIndexingWorker.cs`
