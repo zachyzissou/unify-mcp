@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnifyMcp.Common.Threading;
 using UnifyMcp.Core.Protocol;
 using UnifyMcp.Tools.Documentation;
+using UnifyMcp.Tools.Unity;
 
 namespace UnifyMcp.Core
 {
@@ -165,7 +166,92 @@ namespace UnifyMcp.Core
                         return await docTools.CheckApiDeprecation(apiName);
                     });
 
-                Console.Error.WriteLine($"[UnifyMCP] Registered {4} documentation tools");
+                Console.Error.WriteLine("[UnifyMCP] Registered 4 documentation tools");
+
+                // Register Console Log Tools
+                var consoleTools = new UnityConsoleTools();
+
+                mcpServer.RegisterTool("get_recent_logs",
+                    "Get recent Unity console logs with optional type filtering",
+                    async (args) =>
+                    {
+                        var count = args.ContainsKey("count") ? Convert.ToInt32(args["count"]) : 50;
+                        var logType = args.ContainsKey("logType") ? args["logType"].ToString() : "all";
+                        return await consoleTools.GetRecentLogs(count, logType);
+                    });
+
+                mcpServer.RegisterTool("get_errors",
+                    "Get only Unity error logs (compilation errors, exceptions, assertions)",
+                    async (args) =>
+                    {
+                        var count = args.ContainsKey("count") ? Convert.ToInt32(args["count"]) : 20;
+                        return await consoleTools.GetErrors(count);
+                    });
+
+                mcpServer.RegisterTool("get_warnings",
+                    "Get only Unity warning logs",
+                    async (args) =>
+                    {
+                        var count = args.ContainsKey("count") ? Convert.ToInt32(args["count"]) : 20;
+                        return await consoleTools.GetWarnings(count);
+                    });
+
+                mcpServer.RegisterTool("clear_console",
+                    "Clear the Unity console log buffer",
+                    async (args) => await consoleTools.ClearConsole());
+
+                mcpServer.RegisterTool("get_log_summary",
+                    "Get summary of Unity console logs by type",
+                    async (args) => await consoleTools.GetLogSummary());
+
+                Console.Error.WriteLine("[UnifyMCP] Registered 5 console log tools");
+
+                // Register Scene Query Tools
+                var sceneTools = new SceneQueryTools();
+
+                mcpServer.RegisterTool("get_scene_hierarchy",
+                    "Get Unity scene hierarchy with GameObject names, components, and children",
+                    async (args) =>
+                    {
+                        var maxDepth = args.ContainsKey("maxDepth") ? Convert.ToInt32(args["maxDepth"]) : 3;
+                        return await sceneTools.GetSceneHierarchy(maxDepth);
+                    });
+
+                mcpServer.RegisterTool("find_game_object",
+                    "Find a GameObject by name and get its properties",
+                    async (args) =>
+                    {
+                        var name = args.ContainsKey("name") ? args["name"].ToString() : "";
+                        return await sceneTools.FindGameObject(name);
+                    });
+
+                mcpServer.RegisterTool("get_scene_statistics",
+                    "Get statistics about GameObjects and components in the scene",
+                    async (args) => await sceneTools.GetSceneStatistics());
+
+                mcpServer.RegisterTool("find_objects_with_component",
+                    "Find all GameObjects that have a specific component",
+                    async (args) =>
+                    {
+                        var componentName = args.ContainsKey("componentName") ? args["componentName"].ToString() : "";
+                        var maxResults = args.ContainsKey("maxResults") ? Convert.ToInt32(args["maxResults"]) : 50;
+                        return await sceneTools.FindObjectsWithComponent(componentName, maxResults);
+                    });
+
+                mcpServer.RegisterTool("find_objects_by_tag",
+                    "Find all GameObjects with a specific tag",
+                    async (args) =>
+                    {
+                        var tag = args.ContainsKey("tag") ? args["tag"].ToString() : "";
+                        return await sceneTools.FindObjectsByTag(tag);
+                    });
+
+                mcpServer.RegisterTool("get_loaded_scenes",
+                    "Get list of all loaded Unity scenes",
+                    async (args) => await sceneTools.GetLoadedScenes());
+
+                Console.Error.WriteLine("[UnifyMCP] Registered 6 scene query tools");
+                Console.Error.WriteLine("[UnifyMCP] Total: 15 tools registered");
             }
             catch (Exception ex)
             {
