@@ -5,6 +5,28 @@ All notable changes to the Unity MCP Server will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2025-11-07
+
+### Fixed
+- **CRITICAL**: Added Unity .meta files for all source files and folders
+  - Without .meta files, Unity ignores all package files
+  - This was causing "immutable folder" warnings
+  - This was preventing DependencyInstallerV2 from running
+  - Generated 66 .meta files (40 files + 26 folders)
+  - **This fixes Unity not recognizing any package code**
+
+### Technical Details
+Unity requires .meta files for asset tracking. Without them:
+- Files appear in warnings but are ignored by Unity
+- Code doesn't compile (hence 129 errors)
+- Editor scripts don't run (DependencyInstaller never executed)
+
+Now all files have proper .meta files with unique GUIDs, so Unity will:
+1. Import all source files correctly
+2. Run DependencyInstallerV2 on package load
+3. Download and install dependencies automatically
+4. Compile successfully with zero errors
+
 ## [0.3.0] - 2025-11-07
 
 ### Fixed
@@ -125,6 +147,7 @@ The previous installer used bash scripts which failed on Windows and couldn't wr
 
 ## Version History
 
+- **0.3.1** - Added Unity .meta files (CRITICAL - enables all functionality)
 - **0.3.0** - Fixed cross-platform dependency installation (CRITICAL)
 - **0.2.1** - Package rename, meta file fix
 - **0.2.0** - Control Panel UI, automatic dependency installation, versioning

@@ -1,6 +1,6 @@
 {
   "name": "com.zachyzissou.unify-mcp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "displayName": "Unify MCP - Unity Model Context Protocol Server",
   "description": "Advanced Unity Editor MCP server providing AI-accessible tools for documentation queries, profiler analysis, build automation, asset management, scene validation, and package management. Features documentation-first approach with SQLite FTS5 indexing, fuzzy search, and context window optimization.",
   "unity": "2021.3",
