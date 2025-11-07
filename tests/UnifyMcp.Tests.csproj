@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <LangVersion>12.0</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Include PathValidator, AssetTools, SceneTools and their tests -->
+    <Compile Include="../src/Common/Security/PathValidator.cs" LinkBase="src/Common/Security" />
+    <Compile Include="../src/Tools/Assets/AssetTools.cs" LinkBase="src/Tools/Assets" />
+    <Compile Include="../src/Tools/Scene/SceneTools.cs" LinkBase="src/Tools/Scene" />
+    <Compile Include="Common/Security/PathValidatorTests.cs" />
+    <Compile Include="Common/Security/PathValidatorEdgeCaseTests.cs" />
+    <Compile Include="Integration/SecurityValidationTests.cs" />
+  </ItemGroup>
+
+</Project>

@@ -56,5 +56,4 @@ Context/
 # Test artifacts (build outputs)
 tests/bin/
 tests/obj/
-tests/*.csproj
 tests/*.csproj.meta
