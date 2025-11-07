@@ -47,12 +47,22 @@ git clone https://github.com/zachyzissou/unify-mcp.git
 cd unify-mcp
 ```
 
-2. **Install NuGet dependencies** (manual - see `src/Plugins/README.md`):
-   - ModelContextProtocol.dll (v0.4.0-preview.3)
-   - System.Data.SQLite.dll
-   - NJsonSchema.dll
-   - Fastenshtein.dll
-   - AngleSharp.dll
+2. **Install dependencies** (automated):
+
+Use the provided script to automatically download all required NuGet packages:
+
+```bash
+./scripts/install-dependencies.sh
+```
+
+This script downloads and extracts:
+- ModelContextProtocol.dll (v0.4.0-preview.3)
+- System.Data.SQLite.dll (v1.0.118.0)
+- NJsonSchema.dll (v11.0.0)
+- Fastenshtein.dll (v1.0.0.8)
+- AngleSharp.dll (v1.1.2)
+
+**Alternative (manual installation)**: See `CONTRIBUTING.md` for step-by-step manual installation instructions.
 
 3. **Copy to Unity project**:
 ```bash
