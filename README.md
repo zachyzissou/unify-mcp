@@ -3,16 +3,28 @@
 [![CI](https://github.com/zachyzissou/unify-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/zachyzissou/unify-mcp/actions/workflows/ci.yml)
 [![Release](https://github.com/zachyzissou/unify-mcp/releases/latest/badge.svg)](https://github.com/zachyzissou/unify-mcp/releases/latest)
 
-Advanced Unity Editor MCP server providing AI-accessible tools for documentation queries, profiler analysis, build automation, asset management, scene validation, and package management.
+**Status**: ✅ **v0.4.0 - WORKING!** First functional release with stdio MCP server.
+
+Advanced Unity Editor MCP server providing AI-accessible tools for documentation queries, console log access, scene inspection, and more. Connect Claude Desktop, Cursor, or any MCP client to your Unity projects!
 
 ## Features
 
-- **Documentation System**: SQLite FTS5 indexing with fuzzy search
-- **Context Optimization**: 50-70% token reduction for AI interactions
-- **Performance Analysis**: Profiler integration and bottleneck detection
-- **Asset Management**: Batch operations, dependency analysis, optimization
-- **Scene Validation**: Deep inspection and validation rules
-- **Build Automation**: Multi-platform build orchestration
+### ✅ Working Now (v0.4.0)
+
+- **MCP Server**: Full JSON-RPC 2.0 stdio transport
+- **Documentation Tools** (4 tools): SQLite FTS5 indexing with fuzzy search
+- **Console Log Tools** (5 tools): View errors, warnings, and logs from Unity
+- **Scene Query Tools** (6 tools): Inspect GameObject hierarchy and components
+
+**Total: 15 working MCP tools** | [See Usage Guide →](USAGE_GUIDE.md)
+
+### 🚧 Coming Soon
+
+- **Test Runner** (v0.5.0): Run and view NUnit test results
+- **Compiler Integration** (v0.5.0): See C# compilation errors
+- **Real Profiler** (v0.6.0): Performance analysis and bottleneck detection
+- **Asset Management** (v0.6.0): Find unused assets, dependencies
+- **Build Automation** (v0.6.0): Multi-platform builds
 
 ## Installation
 
