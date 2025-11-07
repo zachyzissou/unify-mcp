@@ -1,5 +1,9 @@
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using UnifyMcp.Common.Threading;
+using UnifyMcp.Core.Protocol;
+using UnifyMcp.Tools.Documentation;
 
 namespace UnifyMcp.Core
 {
@@ -11,6 +15,8 @@ namespace UnifyMcp.Core
     {
         private bool isRunning;
         private bool isDisposed;
+        private SimpleMcpServer mcpServer;
+        private Task serverTask;
 
         /// <summary>
         /// Event raised when server starts successfully.
@@ -42,6 +48,7 @@ namespace UnifyMcp.Core
 
         /// <summary>
         /// Starts the MCP server.
+        /// In batch mode, starts stdio transport. In Editor mode, just initializes.
         /// </summary>
         public void Start()
         {
@@ -59,15 +66,47 @@ namespace UnifyMcp.Core
                     MainThreadDispatcher.InitializeInstance();
                 }
 
-                // TODO: Initialize ModelContextProtocol server (Phase 4)
-                // TODO: Initialize stdio transport (Phase 4)
+                // Check if running in batch mode (stdio server mode)
+                bool isBatchMode = UnityEngine.Application.isBatchMode;
+
+                if (isBatchMode)
+                {
+                    // Batch mode: Start stdio MCP server
+                    var serverInfo = new ServerInfo
+                    {
+                        name = "unity-mcp",
+                        version = "0.4.0"
+                    };
+
+                    mcpServer = new SimpleMcpServer(serverInfo);
+                    RegisterTools();
+
+                    // Start server async (non-blocking)
+                    serverTask = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await mcpServer.StartAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.Error.WriteLine($"[UnifyMCP] Server error: {ex.Message}");
+                            OnError?.Invoke(ex);
+                        }
+                    });
+
+                    Console.Error.WriteLine("[UnifyMCP] Stdio MCP server started in batch mode");
+                }
+                else
+                {
+                    // Editor mode: Just initialize (no stdio server needed)
+#if UNITY_EDITOR
+                    UnityEngine.Debug.Log("[UnifyMCP] Editor mode initialized (stdio server not started)");
+#endif
+                }
 
                 isRunning = true;
                 OnStarted?.Invoke();
-
-#if UNITY_EDITOR
-                UnityEngine.Debug.Log("[UnifyMCP] Server started successfully");
-#endif
             }
             catch (Exception ex)
             {
@@ -75,6 +114,62 @@ namespace UnifyMcp.Core
 #if UNITY_EDITOR
                 UnityEngine.Debug.LogError($"[UnifyMCP] Failed to start server: {ex.Message}");
 #endif
+                Console.Error.WriteLine($"[UnifyMCP] Failed to start server: {ex.Message}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Registers all available MCP tools.
+        /// </summary>
+        private void RegisterTools()
+        {
+            try
+            {
+                // Get Unity project path for database
+                var projectPath = UnityEngine.Application.dataPath;
+                var databasePath = Path.Combine(Path.GetDirectoryName(projectPath), "Library", "UnifyMcp", "documentation.db");
+
+                // Ensure directory exists
+                Directory.CreateDirectory(Path.GetDirectoryName(databasePath));
+
+                // Register Documentation Tools
+                var docTools = new DocumentationTools(databasePath);
+
+                mcpServer.RegisterTool("query_documentation",
+                    "Search Unity API documentation with full-text search",
+                    async (args) =>
+                    {
+                        var query = args.ContainsKey("query") ? args["query"].ToString() : "";
+                        return await docTools.QueryDocumentation(query);
+                    });
+
+                mcpServer.RegisterTool("search_api_fuzzy",
+                    "Fuzzy search for Unity API names with typo tolerance",
+                    async (args) =>
+                    {
+                        var query = args.ContainsKey("query") ? args["query"].ToString() : "";
+                        var threshold = args.ContainsKey("threshold") ? Convert.ToDouble(args["threshold"]) : 0.7;
+                        return await docTools.SearchApiFuzzy(query, threshold);
+                    });
+
+                mcpServer.RegisterTool("get_unity_version",
+                    "Get current Unity Editor version and documentation version",
+                    async (args) => await docTools.GetUnityVersion());
+
+                mcpServer.RegisterTool("check_api_deprecation",
+                    "Check if an API is deprecated and get migration suggestions",
+                    async (args) =>
+                    {
+                        var apiName = args.ContainsKey("apiName") ? args["apiName"].ToString() : "";
+                        return await docTools.CheckApiDeprecation(apiName);
+                    });
+
+                Console.Error.WriteLine($"[UnifyMCP] Registered {4} documentation tools");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"[UnifyMCP] Error registering tools: {ex.Message}");
                 throw;
             }
         }
@@ -89,8 +184,21 @@ namespace UnifyMcp.Core
 
             try
             {
-                // TODO: Shutdown stdio transport (Phase 4)
-                // TODO: Shutdown ModelContextProtocol server (Phase 4)
+                // Stop MCP server if running
+                if (mcpServer != null)
+                {
+                    mcpServer.Stop();
+                    mcpServer.Dispose();
+                    mcpServer = null;
+                    Console.Error.WriteLine("[UnifyMCP] MCP server stopped");
+                }
+
+                // Wait for server task to complete (with timeout)
+                if (serverTask != null && !serverTask.IsCompleted)
+                {
+                    serverTask.Wait(TimeSpan.FromSeconds(5));
+                    serverTask = null;
+                }
 
                 isRunning = false;
                 OnStopped?.Invoke();
@@ -105,6 +213,7 @@ namespace UnifyMcp.Core
 #if UNITY_EDITOR
                 UnityEngine.Debug.LogError($"[UnifyMCP] Error stopping server: {ex.Message}");
 #endif
+                Console.Error.WriteLine($"[UnifyMCP] Error stopping server: {ex.Message}");
             }
         }
 
