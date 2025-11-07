@@ -97,7 +97,7 @@ namespace UnifyMcp.Unity.Editor
             foreach (string guid in guids)
             {
                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                if (assetPath.Contains("com.anthropic.unify-mcp"))
+                if (assetPath.Contains("com.zachyzissou.unify-mcp"))
                 {
                     // Get package root (go up from src/Unity/Editor/)
                     string dir = Path.GetDirectoryName(assetPath);

@@ -467,7 +467,7 @@ namespace UnifyMcp.Unity.Editor
         private void DetectPaths()
         {
             unityProjectPath = Path.GetFullPath(Application.dataPath + "/..");
-            projectPath = Path.GetFullPath(Path.Combine(Application.dataPath, "../Packages/com.anthropic.unify-mcp"));
+            projectPath = Path.GetFullPath(Path.Combine(Application.dataPath, "../Packages/com.zachyzissou.unify-mcp"));
         }
 
         private void UpdateServerStatus()

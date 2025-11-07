@@ -5,6 +5,21 @@ All notable changes to the Unity MCP Server will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2025-11-07
+
+### Changed
+- **BREAKING**: Package name changed from `com.anthropic.unify-mcp` to `com.zachyzissou.unify-mcp`
+  - Reflects correct project ownership
+  - Users must remove old package and add new one
+
+### Fixed
+- Added package.json.meta file to resolve Unity warning about missing meta file
+
+### Migration Guide (0.2.0 → 0.2.1)
+1. In Unity Package Manager, remove "Unify MCP" package
+2. Add package from git URL: `https://github.com/zachyzissou/unify-mcp.git`
+3. Or update manifest.json: `"com.zachyzissou.unify-mcp": "https://github.com/zachyzissou/unify-mcp.git#v0.2.1"`
+
 ## [0.2.0] - 2025-11-07
 
 ### Added
@@ -86,6 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **0.2.1** - Package rename, meta file fix
 - **0.2.0** - Control Panel UI, automatic dependency installation, versioning
 - **0.1.0** - Initial production release
 

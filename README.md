@@ -33,7 +33,7 @@ Advanced Unity Editor MCP server providing AI-accessible tools for documentation
 ```json
 {
   "dependencies": {
-    "com.anthropic.unify-mcp": "https://github.com/zachyzissou/unify-mcp.git#v0.1.0"
+    "com.zachyzissou.unify-mcp": "https://github.com/zachyzissou/unify-mcp.git#v0.2.1"
   }
 }
 ```
@@ -50,7 +50,7 @@ Advanced Unity Editor MCP server providing AI-accessible tools for documentation
 After installation, you need to install NuGet dependencies:
 
 ```bash
-cd Packages/com.anthropic.unify-mcp  # Or Assets/Plugins/UnifyMcp
+cd Packages/com.zachyzissou.unify-mcp  # Or Assets/Plugins/UnifyMcp
 ./scripts/install-dependencies.sh
 ```
 
