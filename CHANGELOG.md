@@ -209,3 +209,19 @@ Unity Package Best Practices:
 ### Changed
 - Excluded Context/ folder from version control
 - Only actual Unity MCP code included in package
+
+## [0.3.5] - 2025-11-07
+
+### Fixed
+- Added .meta file for UnifyMcp.Editor.asmdef (Assembly Definition)
+  - Required for Unity to compile the package correctly
+  - Fixes namespace resolution errors
+
+### Changed
+- Excluded documentation files from Unity package (no .meta)
+  - README.md, CHANGELOG.md, CLAUDE.md (GitHub only)
+  - .github/ workflows (CI/CD, not Unity assets)
+  - tests/*.md files (documentation, not code)
+
+### Technical
+Unity only imports files with .meta files. Documentation and CI/CD files are kept in repository for GitHub but excluded from Unity.
