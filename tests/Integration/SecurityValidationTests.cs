@@ -70,7 +70,7 @@ namespace UnifyMcp.Tests.Integration
         }
 
         [Test]
-        public async Task AssetTools_ValidPath_DoesNotThrow()
+        public void AssetTools_ValidPath_DoesNotThrow()
         {
             // Arrange
             var validPath = Path.Combine(testProjectPath, "Assets", "Prefab.prefab");
@@ -83,7 +83,7 @@ namespace UnifyMcp.Tests.Integration
         }
 
         [Test]
-        public async Task SceneTools_ValidPath_DoesNotThrow()
+        public void SceneTools_ValidPath_DoesNotThrow()
         {
             // Arrange
             var validPath = Path.Combine(testProjectPath, "Scenes", "Main.unity");
