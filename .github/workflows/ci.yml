@@ -73,3 +73,24 @@ jobs:
       with:
         files: ./coverage.xml
         fail_ci_if_error: false
+
+  package:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Package Unity Package
+      run: |
+        mkdir -p build/com.anthropic.unify-mcp
+        cp -r src/* build/com.anthropic.unify-mcp/
+        cd build
+        tar -czf unify-mcp-latest.tar.gz com.anthropic.unify-mcp
+
+    - name: Upload package artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: unity-mcp-package
+        path: build/unify-mcp-latest.tar.gz
+        retention-days: 30
