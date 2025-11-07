@@ -50,3 +50,4 @@ coverage/
 # Claude Code
 .claude/
 CLAUDE_WORKSPACE.md
+Context.md
