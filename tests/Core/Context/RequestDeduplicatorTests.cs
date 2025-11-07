@@ -366,5 +366,36 @@ namespace UnifyMcp.Tests.Core.Context
 
             smallCacheDeduplicator.Dispose();
         }
+
+        [Test]
+        public async Task RequestDeduplicator_OldSemaphores_GetCleanedUp()
+        {
+            // Arrange
+            var deduplicator = new RequestDeduplicator(
+                cacheDuration: TimeSpan.FromMilliseconds(50),
+                semaphoreCleanupInterval: TimeSpan.FromMilliseconds(100)
+            );
+
+            var parameters = new Dictionary<string, object> { { "param", "value" } };
+
+            // Create a request that will add a semaphore
+            await deduplicator.ProcessRequestAsync(
+                "TestTool",
+                parameters,
+                async () => await Task.FromResult("result")
+            );
+
+            var initialSemaphoreCount = deduplicator.GetSemaphoreCount();
+            Assert.AreEqual(1, initialSemaphoreCount);
+
+            // Act - Wait for cache to expire and cleanup to run
+            await Task.Delay(200);
+
+            // Assert - Semaphore should be cleaned up
+            var finalSemaphoreCount = deduplicator.GetSemaphoreCount();
+            Assert.AreEqual(0, finalSemaphoreCount);
+
+            deduplicator.Dispose();
+        }
     }
 }

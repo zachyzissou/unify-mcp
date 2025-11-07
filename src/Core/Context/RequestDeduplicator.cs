@@ -16,26 +16,40 @@ namespace UnifyMcp.Core.Context
     {
         private readonly ConcurrentDictionary<RequestKey, CachedResponse> cache;
         private readonly ConcurrentDictionary<RequestKey, SemaphoreSlim> inFlightRequests;
+        private readonly ConcurrentDictionary<RequestKey, DateTime> semaphoreAccessTimes;
         private readonly TimeSpan defaultCacheDuration;
         private readonly int maxCacheSize;
         private readonly Timer cleanupTimer;
+        private readonly Timer semaphoreCleanupTimer;
 
         private int totalRequests;
         private int deduplicatedRequests;
         private int uniqueRequests;
 
+        /// <summary>
+        /// Creates a new RequestDeduplicator instance.
+        /// </summary>
+        /// <param name="cacheDuration">Duration to cache responses (default: 5 minutes)</param>
+        /// <param name="maxCacheSize">Maximum number of cached responses (default: 1000)</param>
+        /// <param name="cleanupInterval">Interval for cache cleanup (default: 1 minute)</param>
+        /// <param name="semaphoreCleanupInterval">Interval for semaphore cleanup (default: 5 minutes)</param>
         public RequestDeduplicator(
             TimeSpan? cacheDuration = null,
             int maxCacheSize = 1000,
-            TimeSpan? cleanupInterval = null)
+            TimeSpan? cleanupInterval = null,
+            TimeSpan? semaphoreCleanupInterval = null)
         {
             cache = new ConcurrentDictionary<RequestKey, CachedResponse>();
             inFlightRequests = new ConcurrentDictionary<RequestKey, SemaphoreSlim>();
+            semaphoreAccessTimes = new ConcurrentDictionary<RequestKey, DateTime>();
             defaultCacheDuration = cacheDuration ?? TimeSpan.FromMinutes(5);
             this.maxCacheSize = maxCacheSize;
 
             var interval = cleanupInterval ?? TimeSpan.FromMinutes(1);
             cleanupTimer = new Timer(CleanupExpiredEntries, null, interval, interval);
+
+            var semCleanupInterval = semaphoreCleanupInterval ?? TimeSpan.FromMinutes(5);
+            semaphoreCleanupTimer = new Timer(CleanupOldSemaphores, null, semCleanupInterval, semCleanupInterval);
         }
 
         /// <summary>
@@ -80,6 +94,7 @@ namespace UnifyMcp.Core.Context
 
             // Get or create semaphore for this request
             var semaphore = inFlightRequests.GetOrAdd(requestKey, _ => new SemaphoreSlim(1, 1));
+            semaphoreAccessTimes[requestKey] = DateTime.UtcNow;
 
             try
             {
@@ -202,6 +217,15 @@ namespace UnifyMcp.Core.Context
                 .ToList();
         }
 
+        /// <summary>
+        /// Gets the current number of active semaphores.
+        /// Used for testing to verify semaphore cleanup.
+        /// </summary>
+        public int GetSemaphoreCount()
+        {
+            return inFlightRequests.Count;
+        }
+
         private void CleanupExpiredEntries(object state)
         {
             var expiredKeys = cache
@@ -213,19 +237,28 @@ namespace UnifyMcp.Core.Context
             {
                 cache.TryRemove(key, out _);
             }
+        }
 
-            // Cleanup old semaphores (not accessed in last 5 minutes)
-            var oldSemaphores = inFlightRequests
-                .Where(kvp => !cache.ContainsKey(kvp.Key))
+        /// <summary>
+        /// Cleans up semaphores that haven't been accessed recently.
+        /// Prevents memory leaks from abandoned semaphores.
+        /// </summary>
+        private void CleanupOldSemaphores(object state)
+        {
+            var cutoffTime = DateTime.UtcNow.AddMinutes(-5);
+
+            var oldKeys = semaphoreAccessTimes
+                .Where(kvp => kvp.Value < cutoffTime && !cache.ContainsKey(kvp.Key))
                 .Select(kvp => kvp.Key)
                 .ToList();
 
-            foreach (var key in oldSemaphores)
+            foreach (var key in oldKeys)
             {
                 if (inFlightRequests.TryRemove(key, out var semaphore))
                 {
                     semaphore.Dispose();
                 }
+                semaphoreAccessTimes.TryRemove(key, out _);
             }
         }
 
@@ -248,6 +281,7 @@ namespace UnifyMcp.Core.Context
         public void Dispose()
         {
             cleanupTimer?.Dispose();
+            semaphoreCleanupTimer?.Dispose();
 
             foreach (var semaphore in inFlightRequests.Values)
             {
@@ -256,6 +290,7 @@ namespace UnifyMcp.Core.Context
 
             cache.Clear();
             inFlightRequests.Clear();
+            semaphoreAccessTimes.Clear();
         }
     }
 }
