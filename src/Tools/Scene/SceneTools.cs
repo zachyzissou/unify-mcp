@@ -1,4 +1,7 @@
+using System;
+using System.IO;
 using System.Threading.Tasks;
+using UnifyMcp.Common.Security;
 
 namespace UnifyMcp.Tools.Scene
 {
@@ -8,9 +11,20 @@ namespace UnifyMcp.Tools.Scene
     // [McpServerToolType]
     public class SceneTools
     {
+        private readonly PathValidator pathValidator;
+
+        public SceneTools(PathValidator validator = null)
+        {
+            pathValidator = validator ?? new PathValidator(
+                Environment.GetEnvironmentVariable("UNITY_PROJECT_PATH") ?? Directory.GetCurrentDirectory()
+            );
+        }
+
         // [McpServerTool]
         public async Task<string> ValidateScene(string scenePath)
         {
+            pathValidator.ValidateOrThrow(scenePath); // Security check
+
             return await Task.Run(() => $"{{\"scene\": \"{scenePath}\", \"issues\": [], \"valid\": true}}");
         }
 

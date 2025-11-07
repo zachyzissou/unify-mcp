@@ -1,4 +1,7 @@
+using System;
+using System.IO;
 using System.Threading.Tasks;
+using UnifyMcp.Common.Security;
 
 namespace UnifyMcp.Tools.Assets
 {
@@ -8,6 +11,16 @@ namespace UnifyMcp.Tools.Assets
     // [McpServerToolType]
     public class AssetTools
     {
+        private readonly PathValidator pathValidator;
+
+        public AssetTools(PathValidator validator = null)
+        {
+            // Will be injected with actual Unity project path in Unity Editor integration
+            pathValidator = validator ?? new PathValidator(
+                Environment.GetEnvironmentVariable("UNITY_PROJECT_PATH") ?? Directory.GetCurrentDirectory()
+            );
+        }
+
         // [McpServerTool]
         public async Task<string> FindUnusedAssets()
         {
@@ -17,6 +30,8 @@ namespace UnifyMcp.Tools.Assets
         // [McpServerTool]
         public async Task<string> AnalyzeAssetDependencies(string assetPath)
         {
+            pathValidator.ValidateOrThrow(assetPath); // Security check
+
             return await Task.Run(() => $"{{\"asset\": \"{assetPath}\", \"dependencies\": []}}");
         }
 
