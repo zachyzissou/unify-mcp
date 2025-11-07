@@ -197,3 +197,15 @@ Unity Package Best Practices:
 - `tests/*.cs` - Included (with .meta)  
 - `tests/*.csproj` - Excluded (gitignored)
 - `src/` - All source code (with .meta)
+
+## [0.3.4] - 2025-11-07
+
+### Fixed
+- Removed `Context/` folder from Unity package
+  - ContextKit project management files (not Unity code)
+  - Was causing meta file warnings in Unity
+  - Now in .gitignore (excluded from package)
+
+### Changed
+- Excluded Context/ folder from version control
+- Only actual Unity MCP code included in package

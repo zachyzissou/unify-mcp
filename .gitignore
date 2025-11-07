@@ -51,6 +51,7 @@ coverage/
 .claude/
 CLAUDE_WORKSPACE.md
 Context.md
+Context/
 
 # Test artifacts (build outputs)
 tests/bin/
