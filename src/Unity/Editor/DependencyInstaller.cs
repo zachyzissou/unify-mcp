@@ -114,6 +114,14 @@ namespace UnifyMcp.Unity.Editor
         [MenuItem("Tools/UnifyMCP/Reinstall Dependencies")]
         private static void ReinstallDependencies()
         {
+            ReinstallDependenciesPublic();
+        }
+
+        /// <summary>
+        /// Public method to reinstall dependencies. Called from Control Panel.
+        /// </summary>
+        public static void ReinstallDependenciesPublic()
+        {
             SessionState.SetBool(INSTALLED_FLAG, false);
             InstallDependencies();
         }
