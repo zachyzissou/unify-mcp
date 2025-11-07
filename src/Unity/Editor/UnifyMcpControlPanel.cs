@@ -374,7 +374,7 @@ namespace UnifyMcp.Unity.Editor
 
             if (GUILayout.Button("Reinstall Dependencies", GUILayout.Height(30)))
             {
-                DependencyInstaller.ReinstallDependenciesPublic();
+                DependencyInstallerV2.ReinstallDependenciesPublic();
             }
 
             EditorGUILayout.EndVertical();

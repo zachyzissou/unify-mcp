@@ -5,6 +5,30 @@ All notable changes to the Unity MCP Server will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-11-07
+
+### Fixed
+- **CRITICAL**: Complete rewrite of dependency installation system
+  - Now works on Windows, Mac, and Linux (cross-platform)
+  - Downloads NuGet packages directly in C# (no bash script dependency)
+  - Installs to `Assets/Plugins/UnifyMcp/Dependencies` (writable location)
+  - Extracts DLLs from .nupkg files natively using ZipFile
+  - Automatic detection of installed dependencies
+  - Proper error handling and logging
+  - **This fixes the 126+ compilation errors on package import**
+
+### Changed
+- Replaced `DependencyInstaller.cs` with `DependencyInstallerV2.cs`
+- Dependencies now install to project Assets folder instead of PackageCache
+- Improved installation feedback with progress messages
+
+### Technical Details
+The previous installer used bash scripts which failed on Windows and couldn't write to PackageCache (read-only). The new installer:
+1. Uses `WebClient` to download from nuget.org
+2. Uses `ZipFile` to extract DLLs from .nupkg
+3. Installs to writable project location
+4. Works on all platforms without external dependencies
+
 ## [0.2.1] - 2025-11-07
 
 ### Changed
@@ -101,6 +125,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **0.3.0** - Fixed cross-platform dependency installation (CRITICAL)
 - **0.2.1** - Package rename, meta file fix
 - **0.2.0** - Control Panel UI, automatic dependency installation, versioning
 - **0.1.0** - Initial production release
