@@ -46,3 +46,7 @@ packages/
 TestResults/
 *.trx
 coverage/
+
+# Claude Code
+.claude/
+CLAUDE_WORKSPACE.md
