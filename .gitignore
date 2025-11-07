@@ -51,3 +51,9 @@ coverage/
 .claude/
 CLAUDE_WORKSPACE.md
 Context.md
+
+# Test artifacts (build outputs)
+tests/bin/
+tests/obj/
+tests/*.csproj
+tests/*.csproj.meta

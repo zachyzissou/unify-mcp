@@ -177,3 +177,23 @@ The previous installer used bash scripts which failed on Windows and couldn't wr
 4. Generate client configurations from Configuration tab
 
 No breaking changes. All existing features preserved.
+
+## [0.3.3] - 2025-11-07
+
+### Changed
+- **BREAKING**: Renamed `docs/` to `Documentation~/` (Unity convention)
+  - Folders ending in `~` are ignored by Unity (no warnings)
+  - Documentation still accessible on GitHub
+  - Cleaner Unity package (no unnecessary asset imports)
+  
+### Fixed
+- Removed `.csproj` files from Unity package
+  - Test project files not needed in Unity packages
+  - Eliminates "can't be found" errors
+  
+### Technical Details
+Unity Package Best Practices:
+- `Documentation~/` - Unity ignores, GitHub displays normally
+- `tests/*.cs` - Included (with .meta)  
+- `tests/*.csproj` - Excluded (gitignored)
+- `src/` - All source code (with .meta)

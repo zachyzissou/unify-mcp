@@ -68,10 +68,10 @@ This installs:
 
 ## Documentation
 
-- [API Reference](docs/API_REFERENCE.md)
-- [Architecture](docs/ARCHITECTURE.md)
-- [MCP Examples](docs/MCP_EXAMPLES.md)
-- [Contributing](docs/CONTRIBUTING.md)
+- [API Reference](Documentation~/API_REFERENCE.md)
+- [Architecture](Documentation~/ARCHITECTURE.md)
+- [MCP Examples](Documentation~/MCP_EXAMPLES.md)
+- [Contributing](Documentation~/CONTRIBUTING.md)
 
 ## Quick Start
 
