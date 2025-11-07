@@ -5,6 +5,19 @@ All notable changes to the Unity MCP Server will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2025-11-07
+
+### Fixed
+- Added Unity .meta files for all test files and directories
+  - 31 test source files (.cs)
+  - 1 test project file (.csproj)
+  - 8 test directories
+  - Completes .meta file coverage for entire package
+
+### Changed
+- Excluded build artifact meta files (bin/, obj/) from version control
+- All source files now have proper Unity asset metadata
+
 ## [0.3.1] - 2025-11-07
 
 ### Fixed
@@ -147,6 +160,7 @@ The previous installer used bash scripts which failed on Windows and couldn't wr
 
 ## Version History
 
+- **0.3.2** - Added .meta files for test files
 - **0.3.1** - Added Unity .meta files (CRITICAL - enables all functionality)
 - **0.3.0** - Fixed cross-platform dependency installation (CRITICAL)
 - **0.2.1** - Package rename, meta file fix
