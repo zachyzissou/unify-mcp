@@ -3,16 +3,29 @@
 [![CI](https://github.com/zachyzissou/unify-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/zachyzissou/unify-mcp/actions/workflows/ci.yml)
 [![Release](https://github.com/zachyzissou/unify-mcp/releases/latest/badge.svg)](https://github.com/zachyzissou/unify-mcp/releases/latest)
 
-Advanced Unity Editor MCP server providing AI-accessible tools for documentation queries, profiler analysis, build automation, asset management, scene validation, and package management.
+**🚧 Work in Progress** — See [ROADMAP.md](ROADMAP.md) for honest project status
 
-## Features
+Unity Editor MCP server for AI-accessible tools. **Documentation system is functional**; core MCP protocol and most tools are in development.
 
-- **Documentation System**: SQLite FTS5 indexing with fuzzy search
-- **Context Optimization**: 50-70% token reduction for AI interactions
-- **Performance Analysis**: Profiler integration and bottleneck detection
-- **Asset Management**: Batch operations, dependency analysis, optimization
-- **Scene Validation**: Deep inspection and validation rules
-- **Build Automation**: Multi-platform build orchestration
+## Implementation Status
+
+### ✅ What Works Today
+- **Documentation System**: SQLite FTS5 indexing, fuzzy search, Unity API docs
+- **Context Optimization**: Token reduction (50-70%), request deduplication, caching
+- **Security**: Path validation, error handling framework
+
+### 🚧 In Development (Stubbed)
+- **MCP Protocol**: Server lifecycle has TODOs; stdio transport not wired ([Issue #4](https://github.com/zachyzissou/unify-mcp/issues/4))
+- **Build Tools**: Returns stub JSON ([Issue #5](https://github.com/zachyzissou/unify-mcp/issues/5))
+- **Asset Tools**: Returns stub JSON ([Issue #5](https://github.com/zachyzissou/unify-mcp/issues/5))
+- **Scene Tools**: Returns stub JSON ([Issue #5](https://github.com/zachyzissou/unify-mcp/issues/5))
+- **Profiler Tools**: Implementation status unclear
+
+### 📋 Planned
+- Tool authorization/permissions ([Issue #6](https://github.com/zachyzissou/unify-mcp/issues/6))
+- Unity Test Runner in CI ([Issue #9](https://github.com/zachyzissou/unify-mcp/issues/9))
+
+**See [ROADMAP.md](ROADMAP.md) for detailed development plan (4-5 month timeline)**
 
 ## Installation
 
