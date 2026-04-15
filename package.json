@@ -20,7 +20,7 @@
     "email": "noreply@anthropic.com",
     "url": "https://github.com/zachyzissou/unify-mcp"
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
     "com.unity.editorcoroutines": "1.0.0"
   },

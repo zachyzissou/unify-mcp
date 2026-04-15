@@ -1,5 +1,5 @@
 > **License Notice**
-> This repository is source-visible only. No copying, modification, redistribution, deployment, or commercial use is permitted without prior written permission from Zach Gonser. See `LICENSE` for details.
+> This repository is source-visible only. No modification, redistribution, deployment, or commercial use is permitted without prior written permission from Zach Gonser. See `LICENSE` for details.
 
 # Unity MCP Server
 
@@ -86,7 +86,7 @@ Once installed, the MCP server will automatically initialize when Unity Editor s
 
 ## License
 
-MIT License - See LICENSE file for details
+Source-Visible License - See LICENSE file for details
 
 ## Support
 

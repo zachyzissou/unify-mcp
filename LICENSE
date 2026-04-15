@@ -1,23 +1,26 @@
-# SlurpNet Source-Visible License v1.0
+# Unity MCP Server Source-Visible License v1.0
 
 Copyright (c) 2026 Zach Gonser and contributors authorized by Zach Gonser.
 All rights reserved.
 
 ## Grant of access
 You may view and read this source code solely for personal reference.
+Solely to the extent technically necessary to exercise that limited right, you may download, cache, clone, print, and make temporary or local copies of the source code for personal review only.
 
 ## No permission granted
-Except for the limited right to view the source code, no other rights are granted.
+Except for the limited rights expressly granted above, no other rights are granted.
 Without prior written permission from Zach Gonser, you may not:
 - use this code or any substantial portion of it in production or non-production systems,
-- copy, reproduce, modify, adapt, translate, or create derivative works,
+- copy, reproduce, modify, adapt, translate, or create derivative works, except as expressly permitted above,
 - distribute, sublicense, sell, lease, lend, publish, or transfer the code,
 - deploy the code, or any modified version of it, for personal, internal, commercial, or public use,
 - use the code to provide hosted or managed services,
 - remove or alter copyright, attribution, or license notices.
 
 ## Contributions
-Unless explicitly agreed otherwise in writing, any contribution, patch, pull request, or suggestion submitted for this repository may be rejected and does not grant you any rights to this codebase.
+Unless explicitly agreed otherwise in writing, any contribution, patch, pull request, or suggestion submitted for this repository may be rejected.
+By submitting any contribution, patch, pull request, or suggestion to this repository, you represent that you have the right to do so and you grant Zach Gonser and contributors authorized by Zach Gonser permission to use, reproduce, modify, adapt, distribute, and otherwise incorporate that submission into this codebase under this LICENSE.
+Submitting a contribution does not grant you any ownership of or additional rights to this codebase except as expressly stated in this LICENSE.
 
 ## Trademark and branding
 No trademark, service mark, trade name, logo, or brand feature license is granted.
