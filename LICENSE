@@ -5,7 +5,7 @@ All rights reserved.
 
 ## Grant of access
 You may view and read this source code solely for personal reference.
-For personal review only, you may download, cache, clone, print, and make temporary or local copies of the source code, including local copies created by version-control tools.
+For review and evaluation purposes only, you may download, cache, clone, print, and make temporary or local copies of the source code, including local copies created by version-control tools.
 
 ## No permission granted
 Except for the limited rights expressly granted above, no other rights are granted.
@@ -20,6 +20,7 @@ Without prior written permission from Zach Gonser, you may not:
 ## Contributions
 Unless explicitly agreed otherwise in writing, any contribution, patch, pull request, or suggestion submitted for this repository may be rejected.
 By submitting any contribution, patch, pull request, or suggestion to this repository, you represent that you have the right to do so and you grant Zach Gonser and contributors authorized by Zach Gonser permission to use, reproduce, modify, adapt, distribute, and otherwise incorporate that submission into this codebase under this LICENSE.
+That contribution grant is non-exclusive, worldwide, royalty-free, and irrevocable for accepted submissions, and you retain ownership of your submission.
 Submitting a contribution does not grant you any ownership of or additional rights to this codebase except as expressly stated in this LICENSE.
 
 ## Trademark and branding
