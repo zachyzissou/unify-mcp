@@ -1,5 +1,5 @@
 > **License Notice**
-> This repository is source-visible only. No modification, redistribution, deployment, or commercial use is permitted without prior written permission from Zach Gonser. See `LICENSE` for details.
+> This repository is source-visible only. Copying is only permitted as technically necessary for review/evaluation. Modification, redistribution, deployment, or commercial use is not permitted without prior written permission from Zach Gonser. See `LICENSE` for details.
 
 # Unity MCP Server
 
