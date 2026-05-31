@@ -7,6 +7,14 @@
 
 Unity Editor MCP server for AI-accessible tools. **Documentation system is functional**; core MCP protocol and most tools are in development.
 
+## Current Truth
+
+- Canonical GitHub Project: [#40 unify-mcp](https://github.com/users/zachyzissou/projects/40)
+- Last refreshed: 2026-05-31T06:40Z.
+- Current active issues: `#3`, `#4`, `#5`, `#6`, `#7`, `#8`, `#9`.
+- Current active PRs: `#10`, `#11`.
+- Active gate: keep status/docs honest while MCP protocol, tool implementations, auth, and CI integration are still incomplete.
+
 ## Implementation Status
 
 ### ✅ What Works Today

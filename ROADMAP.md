@@ -1,8 +1,12 @@
 # Unify MCP Development Roadmap
 
-**Current Status**: Work in Progress  
-**Version**: 0.3.5  
-**Last Updated**: 2026-02-11
+## Current Metadata
+
+- Current Status: Work in Progress
+- Version: 0.3.5
+- Last Updated: 2026-02-11
+- Canonical GitHub Project: [#40 unify-mcp](https://github.com/users/zachyzissou/projects/40)
+- Project Refresh: 2026-05-31T06:40Z
 
 ## Honest Project Status
 
