@@ -1,3 +1,6 @@
+> **License Notice**
+> This repository is source-visible only. Copying is only permitted as technically necessary for review/evaluation. Modification, redistribution, deployment, or commercial use is not permitted without prior written permission from Zach Gonser. See `LICENSE` for details.
+
 # Unity MCP Server
 
 [![CI](https://github.com/zachyzissou/unify-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/zachyzissou/unify-mcp/actions/workflows/ci.yml)
@@ -104,7 +107,7 @@ Once installed, the MCP server will automatically initialize when Unity Editor s
 
 ## License
 
-MIT License - See LICENSE file for details
+Source-Visible License - See LICENSE file for details
 
 ## Support
 
